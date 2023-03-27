@@ -1,0 +1,5 @@
+Chapter 1: Arrays
+
+Question1.2: Learn to use Arrays instead of hashtables for simple things are arrays have less overhead than hashtables.
+
+Question1.3: urlify: While doing inplace substitution its always better to start from the end and move to the beginnig of the array.s
