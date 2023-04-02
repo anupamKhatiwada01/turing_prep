@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 class Main {
   public static void main(String[] args) {
@@ -7,7 +9,8 @@ class Main {
 
     // System.out.println(checkPerm("aca","aacb"));
 
-    // Character[] arr = { 'm', 'r', ' ', 'j', 'o', 'h', 'n', ' ', 's', 'm', 'i', 't', 'h', ' ', ' ', ' ', ' ' };
+    // Character[] arr = { 'm', 'r', ' ', 'j', 'o', 'h', 'n', ' ', 's', 'm', 'i',
+    // 't', 'h', ' ', ' ', ' ', ' ' };
     // System.out.println(Arrays.toString(urlify(arr)));
 
     // System.out.println(palindromePermutation("abc"));
@@ -18,9 +21,17 @@ class Main {
     // System.out.println(oneAway("pales","pale"));
     // System.out.println(oneAway("pale","bale"));
     // System.out.println(oneAway("pale","bake"));
-    System.out.println(stringCompression("aabcccccaaa"));
-    
+    // System.out.println(stringCompression("aabcccccaaa"));
 
+    Integer[][] input = { { 1, 2, 3 }, { 2, 0, 4 }, { 5, 1, 2 } };
+    // System.out.println(Arrays.toString(zeroMatrix(input)));
+    input = zeroMatrix2(input);
+    for (int i = 0; i < input.length; i++) {
+    for (int j = 0; j < input[i].length; j++) {
+        System.out.print(input[i][j] + " ");
+    }
+    System.out.println();
+}
   }
 
   static Boolean checkPerm(String a, String b) {
@@ -113,8 +124,10 @@ class Main {
     if (Math.abs(a.length() - b.length()) >= 2)
       return false;
 
-    if(a.equals(b)) return true;
-    if(a.length()==0 || b.length()==0) return true;
+    if (a.equals(b))
+      return true;
+    if (a.length() == 0 || b.length() == 0)
+      return true;
 
     HashMap<Character, Integer> refMap = new HashMap<>();
 
@@ -150,38 +163,118 @@ class Main {
     return true;
   }
 
-
-
-  static String stringCompression(String input){
+  static String stringCompression(String input) {
 
     StringBuilder sb = new StringBuilder();
 
     // if(input.length()==0 || input.length()==1) return input;
     // Better way to write this
-    if(input.length()<2) return input;
+    if (input.length() < 2)
+      return input;
 
-    Integer count=0;
-    Character current=input.charAt(count);
+    Integer count = 0;
+    Character current = input.charAt(count);
 
     // System.out.println(input);
     // System.out.println(count);
     // System.out.println(current);
-    
-    for(Character c:input.toCharArray()){
-      if(c!=current){
+
+    for (Character c : input.toCharArray()) {
+      if (c != current) {
         sb.append(current);
         sb.append(count);
-        count=1;
-        current=c;
-      }else{
+        count = 1;
+        current = c;
+      } else {
         count++;
       }
     }
 
     sb.append(current);
     sb.append(count);
-    
-    if(input.length()<sb.length()) return input;   
+
+    if (input.length() < sb.length())
+      return input;
     return sb.toString();
   }
+
+  static Integer[][] zeroMatrix(Integer[][] input) {
+    // We'll first do it in O(n) space using sets
+    Set<Integer> row = new HashSet<>();
+    Set<Integer> column = new HashSet<>();
+
+    for (int i = 0; i < input.length; i++) {
+      for (int j = 0; j < input[i].length; j++) {
+        if (input[i][j] == 0) {
+          row.add(i);
+          column.add(j);
+        }
+      }
+    }
+
+    for (int i = 0; i < input.length; i++) {
+      for (int j = 0; j < input[i].length; j++) {
+        if (row.contains(i) || column.contains(j))
+          input[i][j] = 0;
+      }
+    }  
+    return input;
+  }
+
+
+
+  static Integer[][] zeroMatrix2(Integer[][] input){
+
+
+    Boolean firstRowZero = false;
+    Boolean firstColumnZero = false;
+
+
+    // Check if zeroes exist in the first row or first column
+    for(int i=0;i<input[0].length;i++){
+      if(input[0][i]==0) firstRowZero=true;
+    }
+
+    for(int i=0;i<input.length;i++){
+      if(input[i][0]==0) firstColumnZero=true;
+    }
+
+
+    for(int i=1;i<input.length;i++){
+      for(int j=1;j<input[i].length;j++){
+        if(input[i][j]==0) {
+          input[0][j]=0;
+          input[i][0]=0;
+        }
+      }
+    }
+
+    for(int i=1;i<input.length;i++){
+      for(int j=1;j<input[i].length;j++){
+        if(input[0][j]==0 ||input[i][0]==0) input[i][j]=0;
+      }
+    }
+
+
+    if(firstRowZero){
+      for(int i=0;i<input[0].length;i++) input[0][i]=0;
+    }
+
+     if(firstColumnZero){
+      for(int i=0;i<input.length;i++) input[i][0]=0;
+    } 
+    return input;
+  }
+
+
+
+  static Boolean isRotation(String s1, String s2){
+    if(s1==null || s2==null || si.length!=s2.length) return false;
+    
+    // Check if s1 is the rotation of s2
+    String newString = s1+s1;
+    if(newString.contains(s2)) return true;
+    return false;
+  }
+
 }

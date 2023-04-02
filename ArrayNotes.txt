@@ -3,3 +3,7 @@ Chapter 1: Arrays
 Question1.2: Learn to use Arrays instead of hashtables for simple things are arrays have less overhead than hashtables.
 
 Question1.3: urlify: While doing inplace substitution its always better to start from the end and move to the beginnig of the array.s
+
+Question1.7: rotate matrix: Go over this idea of iterating in "layers" and moving from the external to internal "layers" or from internal to external. This pattern of movement will be very useful for other problems as well. Get used to this idea.
+
+Question1.9: isRotation: This is a clever method to check if one string is a rotation of another. What we do is concatenate the input string with itself and then check whether the reference string is a substring of the concatenated string.
