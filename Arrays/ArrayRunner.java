@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-class Main {
+class ArrayRunner {
   public static void main(String[] args) {
     // System.out.println(isUnique("Lundesh"));
 
@@ -269,7 +269,7 @@ class Main {
 
 
   static Boolean isRotation(String s1, String s2){
-    if(s1==null || s2==null || si.length!=s2.length) return false;
+    if(s1==null || s2==null || s1.length()!=s2.length()) return false;
     
     // Check if s1 is the rotation of s2
     String newString = s1+s1;
