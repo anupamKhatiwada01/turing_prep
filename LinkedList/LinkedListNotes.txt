@@ -1,0 +1,4 @@
+Chapter 2: Linked List
+
+Question2.2: kth to last: We keep two pointers and start traversing with the second pointer after k traversals of first pointer. This two pointer is very useful and familiar in linked list problems
+

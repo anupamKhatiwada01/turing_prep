@@ -23,18 +23,32 @@ class LinkedListRunner {
       current++;
     }
 
+
+
+    
     // Checking elements present in the linked list
     // newList = removeDuplicates(newList);
-    // currentNode = newList.getHead();
 
-    // while(currentNode.getNext()!=null){
-    // System.out.println(currentNode.getValue());
-    // currentNode = currentNode.getNext();
-    // }
-    // System.out.println(currentNode.getValue());
+    deleteMiddleNode(newList, newList.getHead().getNext().getNext().getNext());
+    currentNode = newList.getHead();
 
-    System.out.println(kFromLast(newList, 3).getValue());
+    while(currentNode.getNext()!=null){
+    System.out.println(currentNode.getValue());
+    currentNode = currentNode.getNext();
+    }
+    System.out.println(currentNode.getValue());
 
+    // System.out.println(kFromLast(newList, 3).getValue());
+
+
+  }
+
+  static Boolean deleteMiddleNode(LinkedList input,Node c){
+    if(c.getNext()==null || c.getNext().getNext()==null) return false;
+
+    c.setValue(c.getNext().getValue());
+    c.setNext(c.getNext().getNext());
+    return true;
   }
 
   static Node kFromLast(LinkedList input, Integer k) {
