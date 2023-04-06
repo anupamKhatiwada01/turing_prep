@@ -10,7 +10,7 @@ class LinkedListRunner {
     newList.setHead(headNode);
 
     // Let's add a list of integer values to the linked list
-    Integer[] inputList = { 25, 14, 15, 17, 19, 25, 32, 87, 91 };
+    Integer[] inputList = { 25, 14, 35, 87, 91 ,17, 19, 25, 32};
 
     // Adding all the array elements to the linked list
     Node currentNode = newList.getHead();
@@ -22,14 +22,13 @@ class LinkedListRunner {
       currentNode = currentNode.getNext();
       current++;
     }
-
-
-
     
     // Checking elements present in the linked list
     // newList = removeDuplicates(newList);
 
-    deleteMiddleNode(newList, newList.getHead().getNext().getNext().getNext());
+    // deleteMiddleNode(newList, newList.getHead().getNext().getNext().getNext());
+
+    newList = partition(newList,36);
     currentNode = newList.getHead();
 
     while(currentNode.getNext()!=null){
@@ -39,8 +38,88 @@ class LinkedListRunner {
     System.out.println(currentNode.getValue());
 
     // System.out.println(kFromLast(newList, 3).getValue());
+  }
 
 
+  static LinkedList partition(LinkedList input,Integer mid){
+    
+    if(input.getHead()==null || input.getHead().getNext()==null) return input;
+
+    LinkedList leftList = new LinkedList();
+    LinkedList rightList = new LinkedList();
+
+    // Node leftStart = null;
+    // Node rightStart = null;
+
+    Node current = null;
+    
+    Node leftEnd = null;
+    Node rightEnd = null;
+    
+    Node start = input.getHead();
+ 
+    //  while(start!=null){
+      
+      
+    //   if(start.getValue()<mid){
+    //     // Extend leftList 
+    //     if(leftList.getHead()==null) {
+    //       leftList.setHead(start);
+    //       leftEnd = start;
+    //     }else{
+    //       leftEnd.setNext(start);
+    //       leftEnd = leftEnd.getNext();
+    //     }
+        
+    //   }else{
+    //     // Extend rightList
+    //     if(rightList.getHead()==null) {
+    //       rightList.setHead(start);
+    //       rightEnd = start;
+    //     }else{
+    //       rightEnd.setNext(start);
+    //       rightEnd = rightEnd.getNext();
+    //     }
+
+    //   }
+    //   start = start.getNext();
+    // }
+    while(start!=null){
+      
+      current = new Node(start.getValue());
+      
+      if(current.getValue()<mid){
+        // Extend leftList 
+        if(leftList.getHead()==null) {
+          leftList.setHead(current);
+          leftEnd = current;
+        }else{
+          leftEnd.setNext(current);
+          leftEnd = leftEnd.getNext();
+        }
+        
+      }else{
+        // Extend rightList
+        if(rightList.getHead()==null) {
+          rightList.setHead(current);
+          rightEnd = current;
+        }else{
+          rightEnd.setNext(current);
+          rightEnd = rightEnd.getNext();
+        }
+
+      }
+      current=null;      
+      start = start.getNext();
+    }
+
+    if(rightList.getHead()!=null) {
+      // System.out.println(rightList.getHead().getValue());
+      leftEnd.setNext(rightList.getHead());
+    }
+
+    return leftList;
+    
   }
 
   static Boolean deleteMiddleNode(LinkedList input,Node c){
@@ -98,6 +177,12 @@ class Node {
   // method defined
   private Integer value = null;
 
+  public Node(){};
+
+  public Node(Integer intValue){
+    value = intValue;
+  }
+
   void setNext(Node inputNode) {
     next = inputNode;
   }
@@ -116,6 +201,12 @@ class Node {
 }
 
 class LinkedList {
+
+  public LinkedList(Integer input){
+    this.setHead(new Node(input));
+  }
+
+  public LinkedList(){};
   private Node head = null;
 
   void setHead(Node inputHead) {
