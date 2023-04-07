@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class LinkedListRunner {
@@ -5,10 +6,29 @@ class LinkedListRunner {
   public static void main(String[] input) {
     
     // Let's add a list of integer values to the linked list
-    Integer[] inputList = {15,25, 14, 35, 87, 91 ,17, 19, 25, 32};
-    LinkedList newList = addElements(inputList);
-    showElements(newList);
-   
+    // Integer[] inputList = {15,25, 14, 35, 87, 91 ,17, 19, 25, 32};
+    
+    // LinkedList newList = addElements(inputList);
+    // showElements(newList);
+
+
+    Integer[] newList1 = {3,5,9,8,7,8,5};
+    Integer[] newList2 = {7,5,8,2,6,7,9};
+    LinkedList sumList = addition(addElements(newList1), addElements(newList2));
+    // LinkedList sumList = addElements(newList2);
+    
+    showElements(sumList);
+    
+  }
+
+  static reverseList(LinkedList input){
+    // Seems reversing a linked list is not as straight forward as I thought it would be
+    // One way is to add elements to array and then convert back to linked list
+    // Can't seem to think of another way
+    // There is a way. We'll explore that....
+    // This seems to be a very important linked list concept so we will learn this first before moving forward. 
+    // Reversing a linked list also seems like something that might come in handy in the palindrome question
+    
   }
 
 
@@ -44,6 +64,9 @@ class LinkedListRunner {
 
   static LinkedList addition(LinkedList inputOne, LinkedList inputTwo){
 
+    // We can solve this problem in place using the larger linked list as the return list
+    // But for that we would have to check which is the larger linked list before hand that would mean the time complexity would change to O(max(M,N)+M+N). Ask the interviewer if this is an acceptable tradeof
+
     // First step is the carry variable which will be an integer between 0 and 9
     Integer carry=0,sum=0,value=0;
     // Now we need a run a loop that will terminate when the larger linked list is over
@@ -51,7 +74,6 @@ class LinkedListRunner {
     Node starterTwo = inputTwo.getHead();
 
     LinkedList returnList = new LinkedList();
-    Node toAdd = null;
     Node current = null;
     
     // The loop will end when both the linked lists are exausted
@@ -69,6 +91,8 @@ class LinkedListRunner {
         current.setNext(new Node(value));
         current = current.getNext();
       }
+      starterOne = starterOne!=null && starterOne.getNext()!=null?starterOne.getNext():null;
+      starterTwo = starterTwo!=null && starterTwo.getNext()!=null?starterTwo.getNext():null;
     }
 
     if(carry!=0) current.setNext(new Node(carry));
