@@ -3,41 +3,79 @@ import java.util.HashMap;
 class LinkedListRunner {
 
   public static void main(String[] input) {
-
-    LinkedList newList = new LinkedList();
-    Node headNode = new Node();
-    headNode.setValue(15);
-    newList.setHead(headNode);
-
-    // Let's add a list of integer values to the linked list
-    Integer[] inputList = { 25, 14, 35, 87, 91 ,17, 19, 25, 32};
-
-    // Adding all the array elements to the linked list
-    Node currentNode = newList.getHead();
-    int current = 0;
-    while (current < inputList.length) {
-      Node nodeToAdd = new Node();
-      nodeToAdd.setValue(inputList[current]);
-      currentNode.setNext(nodeToAdd);
-      currentNode = currentNode.getNext();
-      current++;
-    }
     
-    // Checking elements present in the linked list
-    // newList = removeDuplicates(newList);
+    // Let's add a list of integer values to the linked list
+    Integer[] inputList = {15,25, 14, 35, 87, 91 ,17, 19, 25, 32};
+    LinkedList newList = addElements(inputList);
+    showElements(newList);
+   
+  }
 
-    // deleteMiddleNode(newList, newList.getHead().getNext().getNext().getNext());
 
-    newList = partition(newList,36);
-    currentNode = newList.getHead();
+  static void showElements(LinkedList newList){
+    if(newList.getHead()==null){
+      System.out.println("No elements to show");
+      return;
+    }
+    Node currentNode = newList.getHead();
 
     while(currentNode.getNext()!=null){
     System.out.println(currentNode.getValue());
     currentNode = currentNode.getNext();
     }
     System.out.println(currentNode.getValue());
+  }
 
-    // System.out.println(kFromLast(newList, 3).getValue());
+
+  static LinkedList addElements(Integer[] arr){
+    LinkedList newList = new LinkedList();
+    if(arr.length==0 || arr==null) return newList;
+    Node currentNode = null;
+    int current = 0;
+    while (current < arr.length) {
+      Node nodeToAdd = new Node(arr[current]);
+      if(currentNode==null) {newList.setHead(nodeToAdd);currentNode=nodeToAdd;}
+      else {currentNode.setNext(nodeToAdd);currentNode = currentNode.getNext();}
+      current++;
+    }
+    return newList;
+  }
+
+
+  static LinkedList addition(LinkedList inputOne, LinkedList inputTwo){
+
+
+    // First step is the carry variable which will be an integer between 0 and 9
+    Integer carry=0,sum=0,value=0;
+    // Now we need a run a loop that will terminate when the larger linked list is over
+    Node starterOne = inputOne.getHead();
+    Node starterTwo = inputTwo.getHead();
+
+    LinkedList returnList = new LinkedList();
+    Node toAdd = null;
+    Node current = null;
+    
+    // The loop will end when both the linked lists are exausted
+    while(starterOne!=null || starterTwo!=null){
+      Integer a=0,b=0;
+      if(starterOne!=null) a=starterOne.getValue();
+      if(starterTwo!=null) b=starterTwo.getValue();
+      sum = a+b+carry;
+      value = sum%10;
+      carry = sum/10;
+      if(current==null){
+        current = new Node(value);
+        returnList.setHead(current);
+      }else{
+        current.setNext(new Node(value));
+        current = current.getNext();
+      }
+    }
+
+    if(carry!=0) current.setNext(new Node(carry));
+
+    return returnList;
+   
   }
 
 
