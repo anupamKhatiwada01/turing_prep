@@ -44,7 +44,6 @@ class LinkedListRunner {
 
   static LinkedList addition(LinkedList inputOne, LinkedList inputTwo){
 
-
     // First step is the carry variable which will be an integer between 0 and 9
     Integer carry=0,sum=0,value=0;
     // Now we need a run a loop that will terminate when the larger linked list is over
@@ -85,9 +84,6 @@ class LinkedListRunner {
 
     LinkedList leftList = new LinkedList();
     LinkedList rightList = new LinkedList();
-
-    // Node leftStart = null;
-    // Node rightStart = null;
 
     Node current = null;
     
@@ -151,11 +147,8 @@ class LinkedListRunner {
       start = start.getNext();
     }
 
-    if(rightList.getHead()!=null) {
-      // System.out.println(rightList.getHead().getValue());
-      leftEnd.setNext(rightList.getHead());
-    }
-
+    if(rightList.getHead()!=null) leftEnd.setNext(rightList.getHead());
+    
     return leftList;
     
   }
@@ -200,10 +193,7 @@ class LinkedListRunner {
       previous = current;
       current = current.getNext();
     }
-
-    // System.out.println(current.getValue());
-    // System.out.println(previous.getValue());
-
+    
     return input;
   }
 
