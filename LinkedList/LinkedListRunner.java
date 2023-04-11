@@ -14,21 +14,107 @@ class LinkedListRunner {
 
     Integer[] newList1 = {3,5,9,8,7,8,5};
     Integer[] newList2 = {7,5,8,2,6,7,9};
-    LinkedList sumList = addition(addElements(newList1), addElements(newList2));
-    // LinkedList sumList = addElements(newList2);
+    Integer[] newList3 = {1,2,2,1,3};
+    // LinkedList sumList = addition(addElements(newList1), addElements(newList2));
+    // LinkedList sumList = reverseList(addElements(newList2));
     
-    showElements(sumList);
-    
+    // showElements(reverseAddition(addElements(newList1), addElements(newList2)));
+    System.out.println(palindrome(addElements(newList3)));
   }
 
-  static reverseList(LinkedList input){
+  static Node loopDetection(LinkedList input){
+    Node fast = null,slow = null;
+    Integer count = 0;
+    while(true){
+      count++;
+      if(fast==null) fast = input.getHead();
+      else fast = fast.getNext();
+      if(count%2==0){
+        if(slow==null) slow = input.getHead();
+        else slow = slow.getNext();        
+      }
+      if(fast==slow) break;
+    }
+    return fast;
+  }
+
+  
+
+  static Node intersectingNode(LinkedList input_one, LinkedList input_two){
+    // Traverse both nodes and find each node's tail
+    Node tail_one = input_one.getHead(),tail_two = input_two.getHead();
+    Integer count_one = 0,count_two = 0;
+    while(tail_one.getNext()!=null){
+      count_one++;
+      tail_one = tail_one.getNext();
+    }
+    while(tail_two.getNext()!=null){
+      count_two++;
+      tail_two = tail_two.getNext();
+    }
+    // As the tails are not same means there is no intersecting node
+    if(tail_one!=tail_two) return null;
+
+    LinkedList longer_list = count_one>=count_two?input_one:input_two;
+    LinkedList shorter_list = longer_list==input_one?input_two:input_one;
+    
+    Integer ref = Math.abs(count_one-count_two);
+
+    // Let's reuse tail_one and tail_two again
+    tail_one = shorter_list.getHead();
+    tail_two = longer_list.getHead();
+    while(tail_two.getNext()!=null){
+      if(ref>0){
+        tail_two = tail_two.getNext();
+        ref--;
+      }else{
+        if(tail_one==tail_two) break;
+        tail_one = tail_one.getNext();
+        tail_two = tail_two.getNext();
+      }
+    }
+
+    return tail_one;
+
+    
+  }
+  
+  static Boolean palindrome(LinkedList input){
+    if(input.getHead().getNext()==null) return true;
+    LinkedList reverse = reverseList(input);
+    Node current_one = input.getHead(),current_two = reverse.getHead();
+    while(true){
+      if(current_one==null || current_two==null) break;
+      if(current_one.getValue()!=current_two.getValue()) return false;
+      current_one = current_one.getNext();
+      current_two = current_two.getNext();
+    }
+    return true;
+  } 
+
+  static LinkedList reverseList(LinkedList input){
     // Seems reversing a linked list is not as straight forward as I thought it would be
     // One way is to add elements to array and then convert back to linked list
     // Can't seem to think of another way
     // There is a way. We'll explore that....
     // This seems to be a very important linked list concept so we will learn this first before moving forward. 
     // Reversing a linked list also seems like something that might come in handy in the palindrome question
-    
+    if(input.getHead()==null || input.getHead().getNext()==null) return input;
+ 
+    Node ref = null, prev=null,last = input.getHead(),current = last.getNext();
+    while (current.getNext()!=null){
+      ref = current.getNext();
+      current.setNext(last);
+      last.setNext(prev);
+      prev = last;
+      last = current;
+      current = ref;
+    }
+
+    // Need to link current one last time to last
+    current.setNext(last);
+    return new LinkedList(current);
+       
   }
 
 
@@ -59,6 +145,11 @@ class LinkedListRunner {
       current++;
     }
     return newList;
+  }
+
+
+  static LinkedList reverseAddition(LinkedList inputOne, LinkedList inputTwo){
+    return addition(reverseList(inputOne),reverseList(inputTwo));
   }
 
 
@@ -253,6 +344,9 @@ class Node {
 }
 
 class LinkedList {
+  public LinkedList(Node input){
+    this.setHead(input);
+  }
 
   public LinkedList(Integer input){
     this.setHead(new Node(input));
